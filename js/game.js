@@ -3,14 +3,18 @@ import { createGameOverScreen } from './gameover.js';
 let dragging = false;
 
 let angle = -Math.PI / 2;
-let speed = 0.004
+let speed = 0.0004
 let score = 0;
+let gameRunning = false;
 const gameCanvas = document.getElementById('gameCanvas');
 const ctx = gameCanvas.getContext('2d');
 const rect = gameCanvas.getBoundingClientRect();
 
 export function startGame() {
     
+    // Start the game
+    gameRunning = true;
+    animate();
 
     // Add event listeners for mouse interaction
     gameCanvas.addEventListener('mousedown', handleMouseDown);
@@ -29,6 +33,8 @@ export function startGame() {
 
 function animate() {
 
+    // Stop updating the score and the angle when the game is not running
+    if (!gameRunning) return;
 
     // Clear the canvas
     ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
@@ -85,15 +91,19 @@ function animate() {
     if (!dragging) {
         
         angle += speed;
-        speed += 0.000002;
+        speed += 0.0000001;
 
     }
 
     if (angle > 3 * Math.PI / 2 || angle > (-Math.PI / 2) - 0.04 && angle < -1.6) {
-        createGameOverScreen();
+        createGameOverScreen(score);
+        gameRunning = false;
+        speed = 0.0004
         return; // Stop the animation loop
     }
 
+
+    
     // Request the next frame
     console.log(angle);
     requestAnimationFrame(animate);
@@ -158,6 +168,9 @@ function createAndAddButton(type) {
         timerValue = type === 3 ? 20 : 15;
         button.innerText = `${timerValue}`;
 
+        // Change the button's background color back to white when starting the timer
+        button.style.backgroundColor = 'white';
+
         timerInterval = setInterval(() => {
             timerValue -= 1;
             button.innerText = `${timerValue}`;
@@ -170,7 +183,10 @@ function createAndAddButton(type) {
 
             if (timerValue <= 0) {
                 clearInterval(timerInterval);
-                createGameOverScreen();
+                createGameOverScreen(score);
+                speed = 0.0004
+                gameRunning = false; 
+                return;
             }
         }, 1000);
     }
@@ -210,6 +226,9 @@ function createAndAddButton(type) {
         clearInterval(timerInterval);
         startTimer();
         repositionButton();
+        if (timerValue < 5) {
+            button.style.backgroundColor = 'white';
+        }
     });
 
     gameContainer.appendChild(button);

@@ -1,4 +1,4 @@
-export function createGameOverScreen() {
+export function createGameOverScreen(score) {
     const gameContainer = document.getElementById('gameContainer');
 
     const gameOverScreen = document.createElement('div');
@@ -18,6 +18,12 @@ export function createGameOverScreen() {
     gameOverText.textContent = 'Game Over';
     gameOverText.style.color = 'white';
     gameOverText.style.fontSize = '48px';
+
+    const scoreText = document.createElement('p');
+    scoreText.textContent = `Score: ${score}`;
+    scoreText.style.color = 'white';
+    scoreText.style.fontSize = '24px';
+    scoreText.style.marginBottom = '20px';
 
     const restartButton = document.createElement('button');
     restartButton.textContent = 'Restart';
@@ -43,6 +49,7 @@ export function createGameOverScreen() {
     });
 
     gameOverScreen.appendChild(gameOverText);
+    gameOverScreen.appendChild(scoreText);
     gameOverScreen.appendChild(restartButton);
     gameOverScreen.appendChild(exitButton);
     gameContainer.appendChild(gameOverScreen);
