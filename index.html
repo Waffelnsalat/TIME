@@ -1,24 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Timejump</title>
-    <link rel="stylesheet" href="style.css">
+  <!-- Set the character set and viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Set the title and link to a stylesheet -->
+  <title>Timejump</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div id="gameContainer">
-        <canvas id="gameCanvas" width="1600" height="900"></canvas>
-        </div>        
-        <div id="startScreen">
-            <h1>Timejump</h1>
-            <button id="startButton">Start</button>
-            <button id="optionsButton">Options</button>
-            <button id="creditsButton">Credits</button>
-            <button id="exitButton">Exit</button>
-        </div>
-        
-    <audio id="backgroundMusic" src="startscreen.mp3" preload="auto" loop autoplay></audio>
-    <script type="module" src="js/main.js"></script>
+  <!-- Create a container for the game -->
+  <div id="gameContainer">
+    <!-- Create a canvas element for the game graphics -->
+    <canvas id="gameCanvas" width="1600" height="900"></canvas>
+  </div>
+
+  <!-- Create a start screen with buttons for different options -->
+  <div id="startScreen">
+    <h1>Timejump</h1>
+    <button id="startButton">Start</button>
+    <button id="optionsButton">Options</button>
+    <button id="creditsButton">Credits</button>
+    <button id="exitButton">Exit</button>
+  </div>
+
+  <!-- Include an audio file to play in the background -->
+  <audio id="backgroundMusic" src="startscreen.mp3" preload="auto" loop autoplay></audio>
+
+  <!-- Include a JavaScript file that defines the game logic -->
+  <script type="module" src="js/main.js"></script>
 </body>
+
 </html>
