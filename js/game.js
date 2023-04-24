@@ -155,7 +155,7 @@ function createAndAddButton(type) {
     let dy = 2;
 
     function startTimer() {
-        timerValue = type === 3 ? 15 : 10;
+        timerValue = type === 3 ? 20 : 15;
         button.innerText = `${timerValue}`;
 
         timerInterval = setInterval(() => {
