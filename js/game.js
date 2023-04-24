@@ -5,6 +5,7 @@ let dragging = false;
 let angle = -Math.PI / 2;
 let speed = 0.0004;
 let score = 0;
+let framecounter = 0;
 let gameRunning = false;
 
 // Get the canvas and its context
@@ -46,7 +47,16 @@ function animate() {
   ctx.font = '20px Arial';
   ctx.fillStyle = 'white';
   ctx.fillText(`Score: ${score}`, gameCanvas.width - 130, 30);
-  score += 1;
+
+  //Increase the score
+  if (framecounter == 30){
+    score += 1;
+    framecounter = 0;
+  }
+  else {
+    framecounter +=1;
+  }
+
 
   // Calculate the center of the canvas
   const centerX = gameCanvas.width / 2;
@@ -206,6 +216,7 @@ function repositionButton() {
     const y = Math.floor(Math.random() * (gameContainerRect.height - button.clientHeight));
     button.style.left = `${x}px`;
     button.style.top = `${y}px`;
+    score += 10;
     }
     
     // Function to move the button in a bouncing manner, only for type 3 buttons
