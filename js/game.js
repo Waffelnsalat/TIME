@@ -27,9 +27,12 @@ export function startGame() {
 
   // Create and add three buttons to the game container
   createAndAddButton(1);
+  setTimeout(() => {createAndAddButton(1);},10000);
   createAndAddButton(2);
+  setTimeout(() => {createAndAddButton(2);},10000);
   createAndAddButton(3);
   setTimeout(() => {createAndAddButton(3);},10000);
+
 
 
   // Initialize the score
@@ -196,6 +199,7 @@ button.style.backgroundColor = 'white';
 // Declare and initialize various variables for the timer and movement
 let timerValue;
 let timerInterval;
+let autoRepositionInterval;
 let dx = 2;
 let dy = 2;
 
@@ -206,6 +210,17 @@ let dy = 2;
 
 // Change the button's background color back to white when starting the timer
 button.style.backgroundColor = 'white';
+
+  // Add auto-repositioning for type 2 buttons
+  if (type === 2) {
+    autoRepositionInterval = setInterval(() => {
+      if (!gameRunning) {
+        clearInterval(autoRepositionInterval);
+        return;
+      }
+      repositionButton();
+    }, 3000);
+  }
 
 // Start the timer interval and change the button's background color when the timer is low
 timerInterval = setInterval(() => {
@@ -252,18 +267,18 @@ function repositionButton() {
     
       // If the button is hitting the sides of the game container, reverse the direction of the movement and adjust the position
       if (x < 0) {
-        dx = Math.abs(dx)*2;
+        dx = Math.abs(dx);
         x = 0;
       } else if (x + button.clientWidth > gameContainerWidth) {
-        dx = -Math.abs(dx)*2;
+        dx = -Math.abs(dx)*1.1;
         x = gameContainerWidth - button.clientWidth;
       }
     
       if (y < 0) {
-        dy = Math.abs(dy)*2;
+        dy = Math.abs(dy);
         y = 0;
       } else if (y + button.clientHeight > gameContainerHeight) {
-        dy = -Math.abs(dy)*2;
+        dy = -Math.abs(dy)*1.1;
         y = gameContainerHeight - button.clientHeight;
       }
     
@@ -276,14 +291,17 @@ function repositionButton() {
     }
     
 
-// Add event listener to the button to start the timer, reposition the button, and change the direction when clicked
-button.addEventListener('click', () => {
-  clearInterval(timerInterval);
-  startTimer();
-  repositionButton();
-  if (timerValue < 5) {
-    button.style.backgroundColor = 'white';
-  }
+  // Add event listener to the button to start the timer, reposition the button, and change the direction when clicked
+  button.addEventListener('click', () => {
+    clearInterval(timerInterval);
+    if (type === 2) {
+      clearInterval(autoRepositionInterval);
+    }
+    startTimer();
+    repositionButton();
+    if (timerValue < 5) {
+      button.style.backgroundColor = 'white';
+    }
 
   // Change the direction of the moving button (type 3) after being clicked
   if (type === 3) {
@@ -299,7 +317,20 @@ button.addEventListener('click', () => {
       dy = dy < 0 ? -minSpeed : minSpeed;
     }
   }
+
+     // Restart auto-repositioning for type 2 buttons
+  if (type === 2) {
+    clearInterval(autoRepositionInterval); // Clear the existing interval (if any) before creating a new one
+    autoRepositionInterval = setInterval(() => {
+      if (!gameRunning) {
+        clearInterval(autoRepositionInterval);
+        return;
+      }
+      repositionButton();
+    }, 3000);
+  }
 });
+
     
     // Add the button to the game container and set its initial position
     gameContainer.appendChild(button);
