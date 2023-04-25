@@ -29,6 +29,8 @@ export function startGame() {
   createAndAddButton(1);
   createAndAddButton(2);
   createAndAddButton(3);
+  setTimeout(() => {createAndAddButton(3);},10000);
+
 
   // Initialize the score
   score = 0;
@@ -199,7 +201,7 @@ let dy = 2;
 
     // Define the startTimer function
     function startTimer() {
-        timerValue = type === 3 ? 20 : 15;
+        timerValue = type === 3 ? 15 : 10;
         button.innerText = `${timerValue}`;
 
 // Change the button's background color back to white when starting the timer
