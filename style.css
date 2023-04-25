@@ -40,7 +40,8 @@ button {
     padding: 15px 30px;
     font-size: 1.2em;
     cursor: pointer;
-    width: 300px; 
+    border: none;
+    width: 300px;  
     text-align: center; 
 }
 
